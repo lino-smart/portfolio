@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MousePointer2, ArrowRight } from 'lucide-react';
-import profilImage from '../../assets/profil.jpg';
+import profilImage from '../assets/profil.jpg';
 import { FaReact, FaJava, FaNodeJs, FaDocker } from "react-icons/fa6";
 import { SiNextdotjs, SiTypescript, SiJavascript, SiGo, SiRust, SiPreact, SiGraphql, SiPostgresql } from "react-icons/si";
 
@@ -70,17 +70,9 @@ const TECH_STACK: TechItem[] = [{
   symbol: FaDocker
 }];
 
-// @component: PortfolioHero
 export const PortfolioHero = () => {
-  const [isIntroComplete, setIsIntroComplete] = useState(false);
   const [isGlitching, setIsGlitching] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsIntroComplete(true);
-    }, 4500); // Extended to 4.5 seconds for the full animation
-    return () => clearTimeout(timer);
-  }, []);
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -89,110 +81,15 @@ export const PortfolioHero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // @return
   return <div className="relative min-h-screen w-full overflow-hidden" style={{
     backgroundColor: COLORS.background
   }}>
-    {/* Intro Logo Animation - Redesigned with Split and Reveal */}
-    <AnimatePresence mode="wait">
-      {!isIntroComplete && <motion.div key="intro" initial={{
-        opacity: 1
-      }} exit={{
-        opacity: 0,
-        scale: 0.8,
-        filter: 'blur(10px)'
-      }} transition={{
-        duration: 0.8,
-        ease: [0.43, 0.13, 0.23, 0.96]
-      }} className="fixed inset-0 z-50 flex items-center justify-center bg-[#192230]">
-        <div className="relative flex items-center justify-center">
-          {/* Unified Name Animation Container */}
-          <motion.div initial={{
-            scale: 0.8,
-            opacity: 0,
-            x: 0,
-            y: 0
-          }} animate={{
-            scale: [0.8, 1, 1, 0.15],
-            opacity: [0, 1, 1, 1],
-            x: [0, 0, 0, 'calc(-50vw + 80px)'],
-            y: [0, 0, 0, 'calc(-50vh + 40px)']
-          }} transition={{
-            duration: 4.5,
-            times: [0, 0.13, 0.71, 1],
-            ease: [0.4, 0, 0.2, 1]
-          }} className="flex items-center gap-5">
-            {/* First Name: Aliou */}
-            <div className="flex items-center">
-              <motion.span initial={{
-                opacity: 1
-              }} className="text-8xl md:text-9xl font-black tracking-tighter" style={{
-                color: COLORS.accent
-              }}>
-                A
-              </motion.span>
-              <motion.span initial={{
-                opacity: 0,
-                x: -60
-              }} animate={{
-                opacity: 1,
-                x: 0
-              }} transition={{
-                delay: 1.2,
-                duration: 0.8,
-                ease: "easeOut"
-              }} className="text-8xl md:text-9xl font-black tracking-tighter text-white">
-                liou
-              </motion.span>
-            </div>
-
-            {/* Last Name: NIANG */}
-            <div className="flex items-center">
-              <motion.span initial={{
-                opacity: 1
-              }} className="text-8xl md:text-9xl font-black tracking-tighter" style={{
-                color: COLORS.accent
-              }}>
-                N
-              </motion.span>
-              <motion.span initial={{
-                opacity: 0,
-                x: -60
-              }} animate={{
-                opacity: 1,
-                x: 0
-              }} transition={{
-                delay: 1.2,
-                duration: 0.8,
-                ease: "easeOut"
-              }} className="text-8xl md:text-9xl font-black tracking-tighter text-white">
-                IANG
-              </motion.span>
-            </div>
-          </motion.div>
-
-          {/* Yellow line below - appears after name is complete */}
-          <motion.div initial={{
-            width: 0,
-            opacity: 0
-          }} animate={{
-            width: '100%',
-            opacity: 1
-          }} transition={{
-            delay: 2.2,
-            duration: 0.8
-          }} className="absolute -bottom-4 left-0 right-0 h-1 mx-auto" style={{
-            backgroundColor: COLORS.accent
-          }} />
-        </div>
-      </motion.div>}
-    </AnimatePresence>
 
     {/* Hero Section */}
     <motion.main initial={{
       opacity: 0
     }} animate={{
-      opacity: isIntroComplete ? 1 : 0
+      opacity: 1
     }} transition={{
       duration: 1.2,
       delay: 0.2
@@ -201,9 +98,9 @@ export const PortfolioHero = () => {
       <div className="fixed inset-0 z-0 flex flex-col justify-center pointer-events-none select-none overflow-hidden opacity-[0.05]">
         <motion.h2 initial={{
           x: -100
-        }} animate={isIntroComplete ? {
+        }} animate={{
           x: 0
-        } : {}} transition={{
+        }} transition={{
           duration: 2,
           ease: "easeOut"
         }} className="text-[15vw] leading-none font-black italic whitespace-nowrap text-white">
@@ -211,9 +108,9 @@ export const PortfolioHero = () => {
         </motion.h2>
         <motion.h2 initial={{
           x: 100
-        }} animate={isIntroComplete ? {
+        }} animate={{
           x: 0
-        } : {}} transition={{
+        }} transition={{
           duration: 2,
           ease: "easeOut"
         }} className="text-[15vw] leading-none font-black italic whitespace-nowrap text-right text-white">
@@ -228,10 +125,10 @@ export const PortfolioHero = () => {
         <motion.div initial={{
           x: -50,
           opacity: 0
-        }} animate={isIntroComplete ? {
+        }} animate={{
           x: 0,
           opacity: 1
-        } : {}} transition={{
+        }} transition={{
           duration: 0.8,
           delay: 0.6
         }} className="flex-1 flex flex-col items-center lg:items-start gap-8 w-full mt-8">
@@ -263,10 +160,10 @@ export const PortfolioHero = () => {
           <motion.div initial={{
             opacity: 0,
             y: 20
-          }} animate={isIntroComplete ? {
+          }} animate={{
             opacity: 1,
             y: 0
-          } : {}} transition={{
+          }} transition={{
             duration: 0.8,
             delay: 1.2
           }} className="w-full max-w-md">
@@ -278,10 +175,10 @@ export const PortfolioHero = () => {
               {TECH_STACK.map((tech, index) => <motion.div key={tech.name} initial={{
                 opacity: 0,
                 scale: 0.8
-              }} animate={isIntroComplete ? {
+              }} animate={{
                 opacity: 1,
                 scale: 1
-              } : {}} transition={{
+              }} transition={{
                 duration: 0.4,
                 delay: 1.3 + index * 0.05,
                 ease: "easeOut"
@@ -430,7 +327,7 @@ export const PortfolioHero = () => {
     </div>
 
     {/* Right Side Scroll Indicators - Hidden until intro is COMPLETE */}
-    {isIntroComplete && <motion.div initial={{
+    <motion.div initial={{
       opacity: 0
     }} animate={{
       opacity: 1
@@ -459,16 +356,25 @@ export const PortfolioHero = () => {
         }
         return <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${i === activeSection ? 'bg-[#ffcd00] scale-150' : 'bg-white/20'}`} />;
       })}
-    </motion.div>}
+    </motion.div>
 
-    {/* Top Left Branding - AN. Logo WITHOUT Role Label */}
-    <div className="absolute top-10 left-10 z-40">
-      <div className="text-white font-black text-2xl tracking-tighter">
-        A<span className="text-[#ffcd00]">N</span>.
-      </div>
+    <div className="absolute top-6 left-6 md:top-10 md:left-10 z-40">
+      <motion.div className="w-12 h-6 md:w-16 md:h-8" layoutId="brand-logo">
+        <svg
+          viewBox="0 0 200 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full"
+        >
+          <path d="M40 90 L70 10 L100 90" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M52 58 L88 58" stroke="white" strokeWidth="4" strokeLinecap="round" />
+          <path d="M120 90 L120 10 L160 90 L160 10" stroke="#ffcd00" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+
+          <path d="M40 90 L70 10 L100 90" fill="white" stroke="none" />
+        </svg>
+      </motion.div>
     </div>
 
-    {/* CSS Keyframes for Glitch Animation */}
     <style>{`
         @keyframes glitch {
           0% { transform: translate(0); }

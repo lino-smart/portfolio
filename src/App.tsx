@@ -1,12 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Container, Theme } from './settings/types';
-import { PortfolioHero } from './components/generated/PortfolioHero';
-import { QuestLog } from './components/generated/QuestLog';
-import { Arsenal } from './components/generated/Arsenal';
-import { Terminal } from './components/generated/Terminal';
+import { PortfolioHero } from './components/PortfolioHero';
+import { QuestLog } from './components/QuestLog';
+import { Arsenal } from './components/Arsenal';
+import { Terminal } from './components/Terminal';
+import { Preloader } from './components/Preloader';
+import { AnimatePresence } from 'framer-motion';
 
 const theme: Theme = 'dark';
-// only use 'centered' container for standalone components, never for full page apps or websites.
 const container: Container = 'none';
 
 function App() {
@@ -18,19 +19,26 @@ function App() {
     }
   }
 
+  const [loading, setLoading] = useState(true);
+
   setTheme(theme);
 
   const generatedComponent = useMemo(() => {
-    // THIS IS WHERE THE TOP LEVEL GENRATED COMPONENT WILL BE RETURNED!
     return (
-      <>
-        <PortfolioHero />
-        <QuestLog />
-        <Arsenal />
-        <Terminal />
-      </>
-    ); // %EXPORT_STATEMENT%
-  }, []);
+      <AnimatePresence>
+        {loading ? (
+          <Preloader key="preloader" onComplete={() => setLoading(false)} />
+        ) : (
+          <div key="content">
+            <PortfolioHero />
+            <QuestLog />
+            <Arsenal />
+            <Terminal />
+          </div>
+        )}
+      </AnimatePresence>
+    );
+  }, [loading]);
 
   if (container === 'centered') {
     return (
